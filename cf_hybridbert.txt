@@ -1,0 +1,51 @@
+import tensorflow as tf
+from tensorflow.keras.layers import Input, Embedding, Dense, Concatenate, GlobalMaxPooling1D
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
+from transformers import TFBertModel
+from tensorflow.keras.layers import Attention, LayerNormalization
+
+# CF-HybridBERT4Rec Model
+embedding_dim = 64
+num_heads = 2
+transformer_units = 128
+
+# User Embeddings
+user_input = Input(shape=(window_size,))
+user_embedding = Embedding(input_dim=num_users, output_dim=embedding_dim)(user_input)
+user_embedding = Dense(embedding_dim, activation="relu")(user_embedding)
+user_embedding = Attention(num_heads=num_heads)(user_embedding)
+user_embedding = LayerNormalization()(user_embedding)
+
+# Item Embeddings
+item_input = Input(shape=(window_size,))
+item_embedding = Embedding(input_dim=num_items, output_dim=embedding_dim)(item_input)
+item_embedding = Dense(embedding_dim, activation="relu")(item_embedding)
+item_embedding = Attention(num_heads=num_heads)(item_embedding)
+item_embedding = LayerNormalization()(item_embedding)
+
+# Textual Data Input
+text_input = Input(shape=(max_seq_length,), dtype=tf.int32)
+
+# BERT Model
+bert_model_name = "bert-base-uncased"  # Specify the pre-trained BERT model
+bert_model = TFBertModel.from_pretrained(bert_model_name)
+
+# BERT Embeddings
+bert_outputs = bert_model(text_input)[0]  # Obtaining BERT embeddings from the BERT model
+bert_embedding = GlobalMaxPooling1D()(bert_outputs)
+
+# Concatenate User, Item, and BERT Embeddings
+combined_embeddings = Concatenate()([user_embedding, item_embedding, bert_embedding])
+
+# CF-HybridBERT4Rec Prediction Layer
+predictions = Dense(1, activation="linear")(combined_embeddings)
+
+# Create the CF-HybridBERT4Rec model
+cf_hybridbert4rec_model = Model(inputs=[user_input, item_input, text_input], outputs=predictions)
+
+# Compile the model
+cf_hybridbert4rec_model.compile(optimizer=Adam(learning_rate=0.001), loss="mean_squared_error")
+
+# Print the model summary
+cf_hybridbert4rec_model.summary()

@@ -1,0 +1,53 @@
+import pandas as pd
+import numpy as np
+
+# Assuming your original data is stored in a DataFrame called 'df'
+
+# Sort the data by user ID and week number
+df.sort_values(['User ID', 'Week'], inplace=True)
+
+# Group the data by user ID
+grouped = df.groupby('User ID')
+
+# Define the sliding window size
+window_size = 4
+
+# Initialize lists to store the modified data
+modified_user_ids = []
+modified_item_ids = []
+modified_numerical_features = []
+
+# Iterate over each user
+for user_id, group in grouped:
+    # Extract the relevant columns
+    user_ids = group['User ID'].values
+    item_ids = group['Item ID'].values
+    numerical_features = group[['Age', 'Numerical Info']].values
+
+    # Create sliding windows
+    num_windows = len(group) - window_size + 1
+    for i in range(num_windows):
+        modified_user_ids.append(user_ids[i:i+window_size])
+        modified_item_ids.append(item_ids[i:i+window_size])
+        modified_numerical_features.append(numerical_features[i:i+window_size])
+
+# Convert the modified data to numpy arrays
+modified_user_ids = np.array(modified_user_ids)
+modified_item_ids = np.array(modified_item_ids)
+modified_numerical_features = np.array(modified_numerical_features)
+
+# Reshape the modified data if needed
+# modified_user_ids = modified_user_ids.reshape(-1, window_size, 1)
+# modified_item_ids = modified_item_ids.reshape(-1, window_size, 1)
+# modified_numerical_features = modified_numerical_features.reshape(-1, window_size, num_numerical_features)
+
+# Create a new DataFrame with the modified data
+modified_data = pd.DataFrame({
+    'User ID': modified_user_ids.flatten(),
+    'Item ID': modified_item_ids.flatten(),
+    'Age': modified_numerical_features[:, :, 0].flatten(),
+    'Numerical Info': modified_numerical_features[:, :, 1].flatten()
+})
+
+# Print the modified data
+print(modified_data.head())

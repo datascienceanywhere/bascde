@@ -1,0 +1,31 @@
+import pandas as pd
+
+# Define the user-item interaction data
+user_item_data = [
+    ["User1", "Combination1", 3, "Week 1, Day 1", 35, 0.75],
+    ["User2", "Combination2", 4, "Week 1, Day 2", 42, 0.82],
+    ["User3", "Combination1", 5, "Week 1, Day 3", 28, 0.63],
+    ["User4", "Combination3", 2, "Week 1, Day 4", 50, 0.92],
+    ["User5", "Combination2", 4, "Week 1, Day 5", 37, 0.77],
+    ["User1", "Combination2", 4, "Week 2, Day 1", 35, 0.81],
+    ["User2", "Combination1", 5, "Week 2, Day 2", 42, 0.78],
+    ["User3", "Combination3", 3, "Week 2, Day 3", 28, 0.66],
+    ["User4", "Combination2", 4, "Week 2, Day 4", 50, 0.89],
+    ["User5", "Combination1", 5, "Week 2, Day 5", 37, 0.72],
+    ["User1", "Combination3", 2, "Week 3, Day 1", 35, 0.69],
+    ["User2", "Combination2", 4, "Week 3, Day 2", 42, 0.85],
+    ["User3", "Combination1", 5, "Week 3, Day 3", 28, 0.57],
+    ["User4", "Combination3", 3, "Week 3, Day 4", 50, 0.91],
+    ["User5", "Combination2", 4, "Week 3, Day 5", 37, 0.76],
+    ["User1", "Combination1", 5, "Week 4, Day 1", 35, 0.78],
+    ["User2", "Combination3", 2, "Week 4, Day 2", 42, 0.88],
+    ["User3", "Combination2", 4, "Week 4, Day 3", 28, 0.61],
+    ["User4", "Combination3", 3, "Week 4, Day 4", 50, 0.82],
+    ["User5", "Combination1", 5, "Week 4, Day 5", 37, 0.76]
+]
+
+# Convert the data into a pandas DataFrame
+df = pd.DataFrame(user_item_data, columns=["User ID", "Item ID", "Rating", "Timestamp", "Age", "Numerical Info"])
+
+# Display the DataFrame
+print(df)
