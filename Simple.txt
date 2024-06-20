@@ -1,0 +1,25 @@
+Given the following information about Dr. John Doe, a cardiologist based in New York, NY:
+
+1. Preferred communication times: Afternoons
+2. Previous interactions: Positive response to email, no response to calls
+3. Engagement history: High email open rates, low call engagement
+
+Strategic imperatives:
+- Increase awareness of new heart medication:
+  - Clinically proven to reduce heart attacks by 30%
+  - Minimal side effects compared to existing treatments
+- Highlight patient benefits:
+  - Improves quality of life
+  - Easily integrated into existing treatment plans
+
+Channel performance data:
+- Email: High historical effectiveness, good recent performance
+- Call: Medium historical effectiveness, poor recent performance
+- Samples: Medium historical effectiveness, medium recent performance
+- Lunch and Learn: High historical effectiveness, high recent performance
+
+Model outputs:
+- Predicted Rx increase: Email (15), Call (5), Samples (10), Lunch and Learn (20)
+- SHAP values: Email (specialty: 0.1, location: 0.05, previous interactions: 0.2, engagement history: 0.15), Call (specialty: 0.05, location: 0.02, previous interactions: 0.1, engagement history: 0.05), Samples (specialty: 0.08, location: 0.03, previous interactions: 0.15, engagement history: 0.1), Lunch and Learn (specialty: 0.12, location: 0.07, previous interactions: 0.25, engagement history: 0.2)
+
+Generate a personalized recommendation for the best communication channel and suggest a message for Dr. John Doe.
